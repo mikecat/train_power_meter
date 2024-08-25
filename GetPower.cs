@@ -75,12 +75,12 @@ class GetPower: Form
 		int maxNumOfCars = 10;
 
 		this.Font = new Font("MS UI Gothic", fontSize, GraphicsUnit.Pixel);
-		this.ClientSize = new Size(gridSize * 15, gridSize * (maxNumOfCars + 4));
+		this.ClientSize = new Size(gridSize * 15, gridSize * (maxNumOfCars + 5) + gridSize / 2);
 		this.FormBorderStyle = FormBorderStyle.FixedSingle;
 		this.MaximizeBox = false;
 		this.Text = "電力量計";
 		Panel mainPanel = new Panel();
-		mainPanel.Size = new Size(gridSize * 14, gridSize * (maxNumOfCars + 3));
+		mainPanel.Size = new Size(gridSize * 14, gridSize * (maxNumOfCars + 4) + gridSize / 2);
 		mainPanel.Location = new Point(gridSize / 2, gridSize / 2);
 		this.Controls.Add(mainPanel);
 
@@ -99,6 +99,11 @@ class GetPower: Form
 		onlyWithPowerCheck.Size = new Size(gridSize * 4 + gridSize / 2, gridSize);
 		onlyWithPowerCheck.Text = "力行時のみ";
 		mainPanel.Controls.Add(onlyWithPowerCheck);
+		CheckBox topMostCheck = new CheckBox();
+		topMostCheck.Location = new Point(0, gridSize * (maxNumOfCars + 3) + gridSize / 2);
+		topMostCheck.Size = new Size(gridSize * 14, gridSize);
+		topMostCheck.Text = "最前面に表示";
+		mainPanel.Controls.Add(topMostCheck);
 
 		Row summaryRow = new Row(mainPanel, "計", gridSize + gridSize / 2);
 		summaryRow.AmpareLabel.Text = "";
@@ -114,6 +119,10 @@ class GetPower: Form
 			{
 				rows[i].WattHour = 0;
 			}
+		};
+
+		topMostCheck.CheckedChanged += (s, e) => {
+			this.TopMost = topMostCheck.Checked;
 		};
 
 		TimeSpan? prevTime = null;
